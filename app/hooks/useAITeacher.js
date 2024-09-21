@@ -81,9 +81,7 @@ export const useAITeacher = create((set, get) => ({
       }));
       // Get TTS
       const audioRes = await fetch(
-        `/api/tts?teacher=${get().teacher}&text=${message.answer.japanese
-          .map((word) => word.word)
-          .join(" ")}`
+        `/api/tts?teacher=${get().teacher}&text=${message.response}`
       );
       const audio = await audioRes.blob();
       const visemes = JSON.parse(await audioRes.headers.get("visemes"));
