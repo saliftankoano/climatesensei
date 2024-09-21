@@ -36,10 +36,11 @@ export async function GET(req) {
     ],
     // model: "gpt-4-turbo-preview", // https://platform.openai.com/docs/models/gpt-4-and-gpt-4-turbo
     model: "gpt-3.5-turbo", // https://help.openai.com/en/articles/7102672-how-can-i-access-gpt-4
+    max_tokens: 100,
     response_format: {
       type: "json_object",
     },
   });
-  console.log(chatCompletion.choices[0].message.content);
+  // console.log(chatCompletion.choices[0].message.content);
   return Response.json(JSON.parse(chatCompletion.choices[0].message.content));
 }
