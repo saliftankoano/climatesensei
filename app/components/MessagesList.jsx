@@ -6,7 +6,6 @@ export const MessagesList = () => {
   const playMessage = useAITeacher((state) => state.playMessage);
   const { currentMessage } = useAITeacher();
   const english = useAITeacher((state) => state.english);
-  const furigana = useAITeacher((state) => state.furigana);
   const classroom = useAITeacher((state) => state.classroom);
 
   const container = useRef();
@@ -17,6 +16,8 @@ export const MessagesList = () => {
       behavior: "smooth",
     });
   }, [messages.length]);
+
+  console.log(messages);
 
   const renderEnglish = (englishText) => (
     <>
@@ -65,63 +66,20 @@ export const MessagesList = () => {
                 >
                   {message.speech}
                 </span>
-                {renderEnglish(message.answer.english)}
+                {renderEnglish(message.answer.english)}{" "}
+                {/* Ensure this is valid */}
               </div>
             </div>
-            {currentMessage === message ? (
-              <button
-                className="text-white/65"
-                onClick={() => stopMessage(message)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-16 h-16"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M9 9.563C9 9.252 9.252 9 9.563 9h4.874c.311 0 .563.252.563.563v4.874c0 .311-.252.563-.563.563H9.564A.562.562 0 0 1 9 14.437V9.564Z"
-                  />
-                </svg>
-              </button>
-            ) : (
-              <button
-                className="text-white/65"
-                onClick={() => playMessage(message)}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="currentColor"
-                  className="w-16 h-16"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
-                  />
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M15.91 11.672a.375.375 0 0 1 0 .656l-5.603 3.113a.375.375 0 0 1-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112Z"
-                  />
-                </svg>
-              </button>
-            )}
+            {/* Button Logic for Playing/Stopping Message */}
           </div>
-          <div className="p-5 mt-5  bg-gradient-to-br from-pink-200/20 to-pink-500/20 rounded-xl">
-            {currentMessage.response}
+          <div className="p-5 mt-5 text-white text-4xl rounded-xl">
+            {message.answer &&
+            typeof message.answer === "object" &&
+            message.answer.response ? (
+              message.answer.response
+            ) : (
+              <pre>{JSON.stringify(message.answer, null, 2)}</pre>
+            )}
           </div>
         </div>
       ))}
