@@ -1,4 +1,5 @@
 // app/api/chat/route.js
+import { TemplateContext } from 'next/dist/shared/lib/app-router-context.shared-runtime';
 import { NextResponse } from 'next/server';
 
 export async function POST(req) {
@@ -15,7 +16,8 @@ export async function POST(req) {
     body: JSON.stringify({
       model: 'gpt-4', // OpenAI model
       messages: messages.map((msg) => ({ role: msg.role, content: msg.content })),
-      max_tokens: 150,
+      max_tokens: 100,
+
     }),
   });
 
